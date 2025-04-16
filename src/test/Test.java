@@ -1,43 +1,72 @@
-//람다
-
 package test;
 
 import java.util.Random;
 
-public class Test extends Thread{
-    public static void main(String[] args) {
-    	
-    	Random ran = new Random();
-        int x = ran.nextInt(100);
-        int y = ran.nextInt(100);
+//람다 + thread
 
-        Runnable add = () -> {
-            int result = x + y;
-            System.out.printf("%d + %d = %d\n", x,  y, (x+y));
-        };
+public class Test {
 
-        Runnable sub = () -> {
-            int result = x - y;
-            System.out.printf("%d - %d = %d\n", x, y, (x-y));
-        };
+	public static void main(String[] args) {
+		Random ran = new Random();
 
-        Runnable mul = () -> {
-            int result = x * y;
-            System.out.printf("%d * %d = %d\n", x, y, (x*y));
-        };
+		int x = ran.nextInt(100);
+		int y = ran.nextInt(100);
 
-        Runnable div = () -> {
-            int result = (y != 0) ? x / y : 0;
-            System.out.printf("%d / %d =  %d\n", x, y, (x/y));
-        };
+		Runnable task1 = () -> {
+			int result = x + y;
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.printf("덧셈 : %d + %d = %d\n", x, y, result);
+		};
 
-        Thread a = new Thread(add);
-        a.start();
-        Thread s = new Thread(sub);
-        s.start();
-        Thread m = new Thread(mul);
-        m.start();
-        Thread d = new Thread(div);
-        d.start();
-    }
+		Runnable task2 = () -> {
+			int result = x - y;
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.printf("뺄셈 : %d - %d = %d\n", x, y, result);
+		};
+
+		Runnable task3 = () -> {
+			int result = x * y;
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.printf("곱하기 : %d * %d = %d\n", x, y, result);
+		};
+
+		Runnable task4 = () -> {
+			if (y != 0) {
+				int result = x / y;
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				System.out.printf("나누기 : %d / %d = %d\n", x, y, result);
+			}
+		};
+
+		runTask(task1);
+		runTask(task2);
+		runTask(task3);
+		runTask(task4);
+	}
+// 메인 메서드 바깥에 작성함 
+	private static void runTask(Runnable task) {
+		Thread t = new Thread(task);
+		t.start();
+		try {
+			t.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 }
