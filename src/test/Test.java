@@ -59,7 +59,7 @@ public class Test {
 		runTask(task3);
 		runTask(task4);
 	}
-// 메인 메서드 바깥에 작성함 
+// 메인 메서드 바깥에 작성
 	private static void runTask(Runnable task) {
 		Thread t = new Thread(task);
 		t.start();
