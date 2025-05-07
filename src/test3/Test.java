@@ -1,59 +1,26 @@
 package test3;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Test {
+	public static void main(String[] args) throws IOException {
+		FileWriter fw = null;
+		fw = new FileWriter("output2.txt");
 
-	public static Runnable task1 = () -> {
-		int result = Dto.x + Dto.y;
-		sleep();
-		System.out.printf("덧셈 : %d + %d = %d\n", Dto.x, Dto.y, result);
-	};
-
-	public static Runnable task2 = () -> {
-		double result = Dto.x - Dto.y;
-		sleep();
-		System.out.printf("뺄셈 : %d - %d = %.0f\n", Dto.x, Dto.y, result);
-	};
-
-	public static Runnable task3 = () -> {
-		int result = Dto.x * Dto.y;
-		sleep();
-		System.out.printf("곱하기 : %d * %d = %d\n", Dto.x, Dto.y, result);
-	};
-
-	public static Runnable task4 = () -> {
-
-//		Random random = new Random();
-		Dto dto = new Dto();
-//		dto.x = random.nextInt(100);
-//		dto.y = random.nextInt(100);
-
-		if (dto != null && dto.x != 0 && dto.y != 0) {
-			int big;
-			int small;
-
-			if (dto.x > dto.y) {
-				big = dto.x;
-				small = dto.y;
-			} else {
-				big = dto.y;
-				small = dto.x;
-				System.out.println("x랑 y랑 위치 바꿔서");
-			}
-
-			int result = (int) big / small;
-
-			sleep();
-			System.out.printf("나누기 : %d / %d = %d\n", big, small, result);
-		} else {
-			System.out.println("0으로 나눌 수 X");
+		for (int i = 0; i < 10; i++) {
+			String data = i + "번째 라인\n";
+			fw.write(data);
 		}
-	};
+		fw.close();
+		
+		FileWriter fw2 = null;
+		fw2 = new FileWriter("output2.txt", true); // append
 
-	private static void sleep() {
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		for (int i = 10; i < 20; i++) {
+			String data = i + "번째 라인\n";
+			fw2.write(data);
 		}
+		fw2.close();
 	}
 }
